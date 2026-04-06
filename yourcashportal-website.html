@@ -72,9 +72,8 @@
     /* Hamburger */
     .nav-ham{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;}
     .nav-ham span{display:block;width:22px;height:2px;background:var(--silver);border-radius:2px;transition:all 0.3s;}
-    #mob-menu{display:none;position:fixed;top:68px;left:0;right:0;z-index:2000;background:rgba(15,23,42,0.99);padding:24px;border-bottom:1px solid var(--navy-m);}
+    #mob-menu{display:none;position:fixed;top:68px;left:0;right:0;z-index:2000;background:rgba(15,23,42,0.99);backdrop-filter:blur(20px);padding:24px;border-bottom:1px solid var(--navy-m);}
     #mob-menu.open{display:block;}
-    #mob-menu.open{transform:translateY(0);pointer-events:all;}
     #mob-menu a{display:block;font-size:16px;font-weight:600;color:var(--silver);padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
     #mob-menu .lang-btn{margin-top:16px;width:100%;justify-content:center;}
 
@@ -808,11 +807,9 @@ function toggleMenu() {
   const menu = document.getElementById('mob-menu');
   const isOpen = menu.classList.contains('open');
   menu.classList.toggle('open');
-  document.body.style.overflow = isOpen ? '' : 'hidden';
-}
-function closeMenu() {
-  document.getElementById('mob-menu').classList.remove('open');
-  document.body.style.overflow = '';
+  document.body.classList.toggle('menu-open', !isOpen);
+  const btn = document.getElementById('ham-btn');
+  if (btn) btn.setAttribute('aria-expanded', String(!isOpen));
 }
 
 function closeMenu() {
