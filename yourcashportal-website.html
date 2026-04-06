@@ -808,9 +808,11 @@ function toggleMenu() {
   const menu = document.getElementById('mob-menu');
   const isOpen = menu.classList.contains('open');
   menu.classList.toggle('open');
-  document.body.classList.toggle('menu-open', !isOpen);
-  const btn = document.getElementById('ham-btn');
-  if (btn) btn.setAttribute('aria-expanded', String(!isOpen));
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+function closeMenu() {
+  document.getElementById('mob-menu').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function closeMenu() {
