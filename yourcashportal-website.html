@@ -206,15 +206,19 @@
 
     /* FOOTER */
     footer{background:var(--navy);border-top:1px solid var(--navy-m);padding:64px 24px 40px;}
-    .foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
-    .foot-tagline{font-size:14px;color:var(--muted);margin-top:12px;line-height:1.6;max-width:260px;}
-    .foot-col-t{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
-    .foot-links{display:flex;flex-direction:column;gap:10px;}
-    .foot-links a{font-size:14px;color:var(--muted);transition:color .2s;}
-    .foot-links a:hover{color:var(--text);}
-    .foot-bot{border-top:1px solid var(--navy-m);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+    .foot-top{display:flex;flex-direction:column;gap:32px;margin-bottom:32px;}
+    .foot-brand{display:flex;flex-direction:column;gap:10px;}
+    .foot-tagline{font-size:13px;color:var(--muted);line-height:1.6;max-width:360px;}
+    .foot-links-row{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;}
+    .foot-links-row a{font-size:13px;color:var(--muted);transition:color .2s;white-space:nowrap;}
+    .foot-links-row a:hover{color:var(--text);}
+    .foot-divider{width:1px;height:14px;background:var(--slate);display:inline-block;}
+    .foot-bot{border-top:1px solid var(--navy-m);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
     .foot-legal{font-size:12px;color:var(--muted);}
-    .foot-comp{font-size:12px;color:var(--muted);max-width:500px;line-height:1.6;}
+    .foot-comp{font-size:11px;color:var(--muted);max-width:500px;line-height:1.6;}
+    .foot-social{display:flex;gap:16px;}
+    .foot-social a{color:var(--muted);font-size:16px;transition:color .2s;}
+    .foot-social a:hover{color:var(--text);}
 
     /* MODAL */
     .modal-ov{position:fixed;inset:0;z-index:2000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
@@ -236,8 +240,8 @@
     .float{animation:float 4s ease-in-out infinite;}
 
     /* RESPONSIVE */
-    @media(max-width:1024px){.feat-grid{grid-template-columns:repeat(2,1fr);}.corr-grid{grid-template-columns:repeat(2,1fr);}.foot-top{grid-template-columns:1fr 1fr;gap:32px;}}
-    @media(max-width:768px){.nav-links{display:none;}.nav-ham{display:flex;}.hero-inner{grid-template-columns:1fr;text-align:center;gap:48px;}.hero-sub{margin:0 auto 40px;}.hero-actions{justify-content:center;}.hero-trust{justify-content:center;}.phone-wrap{order:-1;}.phone-mockup{width:260px;}.feat-grid{grid-template-columns:1fr;}.calc-inner{grid-template-columns:1fr;}.corr-grid{grid-template-columns:repeat(2,1fr);}.steps-wrap{grid-template-columns:repeat(2,1fr);}.steps-wrap::before{display:none;}.stats-grid{grid-template-columns:repeat(2,1fr);}.sec-inner{grid-template-columns:1fr;}.app-inner{grid-template-columns:1fr;}.foot-top{grid-template-columns:1fr;}.foot-bot{flex-direction:column;text-align:center;}}
+    @media(max-width:1024px){.feat-grid{grid-template-columns:repeat(2,1fr);}.corr-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:768px){.nav-links{display:none;}.nav-ham{display:flex;}.hero-inner{grid-template-columns:1fr;text-align:center;gap:48px;}.hero-sub{margin:0 auto 40px;}.hero-actions{justify-content:center;}.hero-trust{justify-content:center;}.phone-wrap{order:-1;}.phone-mockup{width:260px;}.feat-grid{grid-template-columns:1fr;}.calc-inner{grid-template-columns:1fr;}.corr-grid{grid-template-columns:repeat(2,1fr);}.steps-wrap{grid-template-columns:repeat(2,1fr);}.steps-wrap::before{display:none;}.stats-grid{grid-template-columns:repeat(2,1fr);}.sec-inner{grid-template-columns:1fr;}.app-inner{grid-template-columns:1fr;}.foot-bot{flex-direction:column;text-align:center;}.foot-divider{display:none;}}
     @media(max-width:480px){.corr-grid{grid-template-columns:1fr 1fr;}.stats-grid{grid-template-columns:1fr 1fr;}}
   </style>
 </head>
@@ -562,45 +566,33 @@
 <footer>
   <div class="container">
     <div class="foot-top">
-      <div>
+      <div class="foot-brand">
         <span class="brand-name" style="font-size:22px;"><span class="bn-ca">YourCa</span><span class="bn-d">$</span><span class="bn-h">hPortal</span></span>
         <p class="foot-tagline" data-i18n="foot_tag">Fast, affordable international money transfers. Powered by Wise Platform. Regulated by FinCEN.</p>
-        <div style="display:flex;gap:14px;margin-top:20px;"><a href="#" style="color:var(--muted);font-size:18px;">𝕏</a><a href="#" style="color:var(--muted);font-size:18px;">f</a><a href="#" style="color:var(--muted);font-size:18px;">📷</a><a href="#" style="color:var(--muted);font-size:18px;">in</a></div>
       </div>
-      <div>
-        <div class="foot-col-t" data-i18n="foot_product">Product</div>
-        <nav class="foot-links">
-          <a href="#send" data-i18n="nav_send">Send Money</a>
-          <a href="#corridors" data-i18n="nav_dest">Destinations</a>
-          <a href="#how" data-i18n="nav_how">How It Works</a>
-          <a href="#" data-i18n="foot_rates">Exchange Rates</a>
-          <a href="#" data-i18n="foot_app">Mobile App</a>
-        </nav>
-      </div>
-      <div>
-        <div class="foot-col-t" data-i18n="foot_company">Company</div>
-        <nav class="foot-links">
-          <a href="#" data-i18n="foot_about">About Us</a>
-          <a href="#" data-i18n="foot_careers">Careers</a>
-          <a href="#" data-i18n="foot_press">Press</a>
-          <a href="#" data-i18n="foot_blog">Blog</a>
-          <a href="#" data-i18n="foot_contact">Contact</a>
-        </nav>
-      </div>
-      <div>
-        <div class="foot-col-t" data-i18n="foot_legal">Legal</div>
-        <nav class="foot-links">
-          <a href="#" data-i18n="foot_privacy">Privacy Policy</a>
-          <a href="#" data-i18n="foot_terms">Terms of Service</a>
-          <a href="#" data-i18n="foot_cookies">Cookie Policy</a>
-          <a href="#" data-i18n="foot_compliance">Compliance</a>
-          <a href="#" data-i18n="foot_licenses">Licenses</a>
-        </nav>
+      <div class="foot-links-row">
+        <a href="#send" data-i18n="nav_send">Send Money</a>
+        <a href="#corridors" data-i18n="nav_dest">Destinations</a>
+        <a href="#how" data-i18n="nav_how">How It Works</a>
+        <a href="#" data-i18n="foot_rates">Exchange Rates</a>
+        <span class="foot-divider"></span>
+        <a href="#" data-i18n="foot_about">About Us</a>
+        <a href="#" data-i18n="foot_careers">Careers</a>
+        <a href="#" data-i18n="foot_blog">Blog</a>
+        <a href="#" data-i18n="foot_contact">Contact</a>
+        <span class="foot-divider"></span>
+        <a href="#" data-i18n="foot_privacy">Privacy Policy</a>
+        <a href="#" data-i18n="foot_terms">Terms of Service</a>
+        <a href="#" data-i18n="foot_cookies">Cookie Policy</a>
+        <a href="#" data-i18n="foot_compliance">Compliance</a>
       </div>
     </div>
     <div class="foot-bot">
       <div class="foot-legal" data-i18n="foot_copy">© 2026 YourCa$hPortal Inc. All rights reserved.</div>
-      <div class="foot-comp" data-i18n="foot_disclaimer">YourCa$hPortal is registered with the Financial Crimes Enforcement Network (FinCEN) as a Money Services Business (MSB). Money transmission services are provided in partnership with licensed payment providers. Not available in all states.</div>
+      <div class="foot-social">
+        <a href="#">𝕏</a><a href="#">f</a><a href="#">📷</a><a href="#">in</a>
+      </div>
+      <div class="foot-comp" data-i18n="foot_disclaimer">YourCa$hPortal is registered with FinCEN as a Money Services Business. Not available in all states.</div>
     </div>
   </div>
 </footer>
