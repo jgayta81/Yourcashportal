@@ -61,6 +61,7 @@ const T = {
     legalPrivacy: "Legal & Privacy",
     signOut: "Sign Out",
     express: "Express", economy: "Economy", minutes: "Minutes", days: "3–5 days",
+    cashPickup: "Cash Pickup", homeDelivery: "Home Delivery", bankDeposit: "Bank Deposit",
     debitCard: "Debit card", bankAcc: "Bank account",
   },
   es: {
@@ -122,6 +123,7 @@ const T = {
     legalPrivacy: "Legal y Privacidad",
     signOut: "Cerrar Sesión",
     express: "Express", economy: "Económico", minutes: "Minutos", days: "3–5 días",
+    cashPickup: "Retiro en Efectivo", homeDelivery: "Entrega a Domicilio", bankDeposit: "Depósito Bancario",
     debitCard: "Tarjeta de débito", bankAcc: "Cuenta bancaria",
   },
 };
@@ -198,26 +200,26 @@ function LangToggle({ lang, setLang }) {
 
 // ── DATA ────────────────────────────────────────────────────────────────────────
 const COUNTRIES = [
-  { code:"PH", name:"Philippines", flag:"🇵🇭", currency:"PHP", rate:56.82 },
-  { code:"MX", name:"Mexico",      flag:"🇲🇽", currency:"MXN", rate:17.15 },
-  { code:"IN", name:"India",       flag:"🇮🇳", currency:"INR", rate:83.42 },
-  { code:"NG", name:"Nigeria",     flag:"🇳🇬", currency:"NGN", rate:1580.5 },
-  { code:"CO", name:"Colombia",    flag:"🇨🇴", currency:"COP", rate:3940.0 },
-  { code:"GH", name:"Ghana",       flag:"🇬🇭", currency:"GHS", rate:15.2 },
-  { code:"KE", name:"Kenya",       flag:"🇰🇪", currency:"KES", rate:129.5 },
-  { code:"BD", name:"Bangladesh",  flag:"🇧🇩", currency:"BDT", rate:110.3 },
-  { code:"PK", name:"Pakistan",    flag:"🇵🇰", currency:"PKR", rate:278.5 },
-  { code:"VN", name:"Vietnam",     flag:"🇻🇳", currency:"VND", rate:24800 },
+  { code:"MX", name:"Mexico",           flag:"🇲🇽", currency:"MXN", rate:17.15 },
+  { code:"PH", name:"Philippines",      flag:"🇵🇭", currency:"PHP", rate:56.82 },
+  { code:"IN", name:"India",            flag:"🇮🇳", currency:"INR", rate:83.42 },
+  { code:"GT", name:"Guatemala",        flag:"🇬🇹", currency:"GTQ", rate:7.76  },
+  { code:"HN", name:"Honduras",         flag:"🇭🇳", currency:"HNL", rate:24.80 },
+  { code:"DO", name:"Dominican Rep.",   flag:"🇩🇴", currency:"DOP", rate:58.50 },
+  { code:"SV", name:"El Salvador",      flag:"🇸🇻", currency:"USD", rate:1.00  },
+  { code:"CO", name:"Colombia",         flag:"🇨🇴", currency:"COP", rate:3940.0},
+  { code:"NG", name:"Nigeria",          flag:"🇳🇬", currency:"NGN", rate:1580.5},
+  { code:"VN", name:"Vietnam",          flag:"🇻🇳", currency:"VND", rate:24800 },
 ];
 const RECIPIENTS = [
-  { id:1, name:"Maria Santos",  country:"PH", initials:"MS", color:"#e8563a" },
-  { id:2, name:"Raj Patel",     country:"IN", initials:"RP", color:"#2563eb" },
-  { id:3, name:"Carlos Rivera", country:"MX", initials:"CR", color:"#059669" },
+  { id:1, name:"Maria Santos",   country:"PH", initials:"MS", color:"#e8563a" },
+  { id:2, name:"Carlos Rivera",  country:"MX", initials:"CR", color:"#059669" },
+  { id:3, name:"Ana Gutierrez",  country:"GT", initials:"AG", color:"#7c3aed" },
 ];
 const HISTORY = [
-  { id:1, name:"Maria Santos",  amount:200, currency:"PHP", received:11364, date:"24 Mar", status:"delivered" },
-  { id:2, name:"Raj Patel",     amount:150, currency:"INR", received:12513, date:"18 Mar", status:"delivered" },
-  { id:3, name:"Carlos Rivera", amount:300, currency:"MXN", received:5145,  date:"10 Mar", status:"delivered" },
+  { id:1, name:"Carlos Rivera",  amount:300, currency:"MXN", received:5145,  date:"24 Mar", status:"delivered" },
+  { id:2, name:"Maria Santos",   amount:200, currency:"PHP", received:11364, date:"18 Mar", status:"delivered" },
+  { id:3, name:"Ana Gutierrez",  amount:150, currency:"GTQ", received:1164,  date:"10 Mar", status:"delivered" },
 ];
 const fmt = (n, dec=2) => n.toLocaleString("en-US", { minimumFractionDigits:dec, maximumFractionDigits:dec });
 
@@ -237,13 +239,15 @@ export default function App() {
 
   const t = T[lang];
   const numAmount = parseFloat(sendAmount) || 0;
-  const fee       = delivery === "express" ? 3.99 : 0;
+  const fee = delivery === "express" ? 3.99 : delivery === "cashPickup" ? 3.99 : delivery === "homeDelivery" ? 5.99 : 0;
   const total     = numAmount + fee;
   const received  = numAmount * selectedCountry.rate;
 
   const DELIVERY_OPTIONS = [
-    { id:"express", label:t.express, time:t.minutes, fee:3.99, icon:"⚡" },
-    { id:"economy", label:t.economy, time:t.days,    fee:0,    icon:"🏦" },
+    { id:"express",      label:t.bankDeposit,   time:t.minutes, fee:3.99, icon:"🏦" },
+    { id:"cashPickup",   label:t.cashPickup,    time:t.minutes, fee:3.99, icon:"💵" },
+    { id:"homeDelivery", label:t.homeDelivery,  time:"24–48 hrs", fee:5.99, icon:"🏠" },
+    { id:"economy",      label:t.economy,       time:t.days,    fee:0,    icon:"⚡" },
   ];
   const PAYMENT_METHODS = [
     { id:"debit", label:t.debitCard, icon:"💳", last4:"4521" },
@@ -467,12 +471,12 @@ function Step1({ t, sendAmount, setSendAmount, selectedCountry, setSelectedCount
       </div>
 
       <p style={{ fontSize:13, fontWeight:700, color:"#555", marginBottom:10, textTransform:"uppercase", letterSpacing:0.8 }}>{t.deliverySpeed}</p>
-      <div style={{ display:"flex", gap:10, marginBottom:20 }}>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:20 }}>
         {DELIVERY_OPTIONS.map(opt => (
-          <div key={opt.id} onClick={() => setDelivery(opt.id)} style={{ flex:1, background:delivery===opt.id?"#fff5f3":"#faf9f6", border:`2px solid ${delivery===opt.id?"#e8563a":"#f0eeea"}`, borderRadius:16, padding:"14px", cursor:"pointer", textAlign:"center", transition:"all 0.2s" }}>
+          <div key={opt.id} onClick={() => setDelivery(opt.id)} style={{ background:delivery===opt.id?"#fff5f3":"#faf9f6", border:`2px solid ${delivery===opt.id?"#e8563a":"#f0eeea"}`, borderRadius:16, padding:"14px", cursor:"pointer", textAlign:"center", transition:"all 0.2s" }}>
             <div style={{ fontSize:22, marginBottom:6 }}>{opt.icon}</div>
-            <p style={{ fontWeight:700, fontSize:14, color:"#1a1a1a" }}>{opt.label}</p>
-            <p style={{ fontSize:12, color:"#888", marginTop:2 }}>{opt.time}</p>
+            <p style={{ fontWeight:700, fontSize:13, color:"#1a1a1a" }}>{opt.label}</p>
+            <p style={{ fontSize:11, color:"#888", marginTop:2 }}>{opt.time}</p>
             <p style={{ fontSize:13, fontWeight:700, color:opt.fee===0?"#059669":"#e8563a", marginTop:6 }}>{opt.fee===0?t.free:`$${opt.fee}`}</p>
           </div>
         ))}
@@ -604,9 +608,9 @@ function SuccessScreen({ t, goTo, numAmount, received, selectedCountry, selected
         </div>
       </div>
       <div style={{ background:"#fff5f3", borderRadius:14, padding:"14px 18px", width:"100%", marginBottom:24, display:"flex", gap:10, alignItems:"center" }}>
-        <span style={{ fontSize:22 }}>⚡</span>
+        <span style={{ fontSize:22 }}>{delivery==="cashPickup"?"💵":delivery==="homeDelivery"?"🏠":"🏦"}</span>
         <div>
-          <p style={{ fontWeight:700, fontSize:14, color:"#1a1a1a" }}>{t.expressDelivery}</p>
+          <p style={{ fontWeight:700, fontSize:14, color:"#1a1a1a" }}>{delivery==="cashPickup"?t.cashPickup:delivery==="homeDelivery"?t.homeDelivery:t.expressDelivery}</p>
           <p style={{ fontSize:12, color:"#888" }}>{t.estimatedMinutes}</p>
         </div>
       </div>
